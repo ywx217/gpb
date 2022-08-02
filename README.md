@@ -13,7 +13,7 @@ Getting Started
 Install the package by simply run `go get`:
 
 ```shell
-$ go get -u github.com/ywx217/gpb
+➜ go get -u github.com/ywx217/gpb
 ```
 
 ## Performance
@@ -21,28 +21,15 @@ $ go get -u github.com/ywx217/gpb
 Benchmarks of GPB alongside [golang/protobuf](https://github.com/golang/protobuf) is in [gpb_test.go](./gpb_test.go),
 each operation gets a single int32 value from the encoded protobuf data.
 
-These benchmarks were run on a MacBook Pro 15" Intel Core i7@2.20GHz
+These benchmarks were run on a MacBook Pro 15" Intel Core i7@2.20GHz, use `make bench-compare` to reproduce the results.
 
-```shell
-➜  gpb git:(master) ✗ make bench-compare 
-name                time/op
-GoProtobufTiny-12    140ns ± 2%
-GpbTiny-12          42.9ns ± 8%
-GoProtobufSmall-12  3.82µs ± 4%
-GpbSmall-12         77.8ns ± 4%
+|name | description                  | time/op                 | allocs/op | allocs/op |
+| ---- |------------------------------|-------------------------| ----- | ---- |
+| GoProtobufTiny-12 | Tidy payload using protobuf  | 140ns ± 2%                       | 52.0B ± 0%              |  2.00 ± 0% |
+| GpbTiny-12         | Tiny payload using gpb       |  42.9ns ± 8%                    | 0.00B                   |  0.00      |
+| GoProtobufSmall-12 | Small payload using protobuf | 3.82µs ± 4%                   | 2.50kB ± 0%             |  89.0 ± 0% |
+| GpbSmall-12 | Small payload using gpb      | 77.8ns ± 4%                 | 0.00B                   |  0.00      |
 
-name                alloc/op
-GoProtobufTiny-12    52.0B ± 0%
-GpbTiny-12           0.00B     
-GoProtobufSmall-12  2.50kB ± 0%
-GpbSmall-12          0.00B     
-
-name                allocs/op
-GoProtobufTiny-12     2.00 ± 0%
-GpbTiny-12            0.00     
-GoProtobufSmall-12    89.0 ± 0%
-GpbSmall-12           0.00     
-```
 
 ### Test data
 
