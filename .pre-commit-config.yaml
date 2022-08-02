@@ -1,0 +1,44 @@
+default_stages:
+- commit
+exclude_gen_files: &exclude_gen_files
+  exclude: (?x)^((.*/)?mock_[a-z]*/.*|.*_mock.go|.*_gen.go)$
+repos:
+- hooks:
+  - description: Prevent giant files from being committed.
+    id: check-added-large-files
+  - description: Forbid files which have a UTF-8 byte-order maker
+    id: check-byte-order-marker
+  - description: Attempts to load all json files to verify syntax
+    id: check-json
+  - description: Check for files that contain merge conflict strings
+    id: check-merge-conflict
+  - description: Check for symlinks which do not point to anything
+    id: check-symlinks
+  - description: Attempts to load all yaml files to verify syntax
+    id: check-yaml
+  - description: Makes sure files end in a newline and only a newline
+    id: end-of-file-fixer
+  - description: 'Protect specific branches for direct checkins, use args: [--branch,
+      staging, --branch, master] to set the branch'
+    id: no-commit-to-branch
+  - description: Trims trailing whitespace
+    id: trailing-whitespace
+  repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.3.0
+- hooks:
+    - id: go-fmt
+      <<: *exclude_gen_files
+    - id: go-vet
+      <<: *exclude_gen_files
+    - id: go-imports
+      <<: *exclude_gen_files
+    - id: validate-toml
+    - id: no-go-testing
+    - id: golangci-lint
+      <<: *exclude_gen_files
+    - id: go-mod-tidy
+    - id: go-unit-tests
+      pass_filenames: false
+    - id: go-build
+  repo: https://github.com/dnephin/pre-commit-golang
+  rev: master
